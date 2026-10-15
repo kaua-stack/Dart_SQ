@@ -1,52 +1,80 @@
-void main() {
-  List<Map<String, dynamic>> tarefas = [];
+class Tarefa {
+  String titulo;
+  String descricao;
+  int prioridade;
  
-  adicionarTarefa(tarefas, 'Estudar Dart', 'Estudar funções', 1);
-  adicionarTarefa(tarefas, 'Estudar Flutter', 'Estudar Árvore de Widgets', 2);
+  bool _concluida = false;
  
+  static List<Tarefa> tarefas = [];
  
-  listarTarefas(tarefas);
+  Tarefa(
+    this.titulo,
+    this.descricao,
+    this.prioridade
+  );
  
-  concluirTarefa(tarefas, 0);
+  bool get concluida => _concluida;
  
-  listarTarefas(tarefas);
+  void adicionar() {
+    tarefas.add(this);
+  }
  
-}
+  void concluir() {
+    _concluida = true;
+  }
  
-void listarTarefas(List<Map<String, dynamic>> tarefas) {
-  for (int i = 0; i < tarefas.length; i++) {
-    print('${i + 1} - ${tarefas[i]['titulo']}');
-    print('Descrição: - ${tarefas[i]['descricao']}');
+  void executar() {
+    print('Executando tarefa: $titulo');
+  }
  
-    if (tarefas[i]['concluida']) {
-      print("Status: concluida");
-    } else {
-      print('Status: Pendente');
+  static void listar() {
+    for (Tarefa tarefa in tarefas) {
+      print('');
+      print('Titulo: ${tarefa.titulo}');
+      print('Descricao: ${tarefa.descricao}');
+      print('Concluida: ${tarefa.concluida}');
+      print('Prioridade: ${tarefa.prioridade}');
     }
-    print('Prioridade: ${tarefas[i]['prioridade']}');
-    print('');
   }
+}
+ // herança
+class TarefaUrgente extends Tarefa {
+  TarefaUrgente(
+    String titulo,
+    String descricao,
+    int prioridade,
+  ) : super(titulo, descricao, prioridade);
+ 
+  @override  // polimorfismo 
+  void executar() {
+    print('URGENTE!!!!! Executando tarefa');
   }
- 
- 
-void adicionarTarefa(
-  List<Map<String, dynamic>> tarefas,
-  String titulo,
-  String descricao,
-  int prioridade,
-) {
-  tarefas.add({
-    'titulo': titulo,
-    'descricao' : descricao,
-    'concluida': false,
-    'prioridade': prioridade
-  });
 }
  
-void concluirTarefa(
-  List<Map<String, dynamic>> tarefas,
-  int indice,
-) {
-    tarefas[indice]['concluida'] = true;
-}
+void main() {
+  Tarefa tarefa1 = Tarefa('Estudar Dart', 'Aprender Orientação a objetos', 1);
  
+  Tarefa tarefa2 = Tarefa(
+    'Fazer Exercício',
+    'Praticar classes',
+    2,
+  );
+ 
+  TarefaUrgente tarefa3 = TarefaUrgente('Entregar projeto', 'finalizar', 1);
+ 
+  tarefa1.adicionar();
+  tarefa2.adicionar();
+  tarefa3.adicionar();
+ 
+  tarefa1.concluir();
+  tarefa3.concluir();
+ 
+  tarefa1.executar();
+  tarefa3.executar();
+ 
+  Tarefa.listar();
+ 
+  print(tarefa1.concluida);
+ 
+ 
+}

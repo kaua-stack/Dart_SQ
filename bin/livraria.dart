@@ -2,6 +2,11 @@ void main() {
 
   List<Map<String, dynamic>> livros = [];
 
+  Livro livro1 = Livro("senac front" , 'senac', 5);
+
+  print('o ${livro1.nome} autor ${livro1.autor} ano ${livro1.anoP}');
+
+
   cadastrarLivro(
       livros,
       'Dom Casmurro',
@@ -151,3 +156,12 @@ void mostrarEmprestados(List<Map<String, dynamic>> livros) {
   }
 }
 
+
+
+class Livro{
+  String nome ;
+  String autor ;
+  int anoP ;
+
+  Livro(this.nome, this.autor , this.anoP);
+}
